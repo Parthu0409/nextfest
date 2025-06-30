@@ -8,6 +8,11 @@ import { Gamification } from './pages/Gamification';
 import { Notifications } from './pages/Notifications';
 import { Login } from './pages/Login';
 import { Signup } from './pages/Signup';
+import EventDetails from './pages/EventDetails';
+import StudentProfile from './pages/StudentProfile';
+import OrganizerDashboard from './pages/OrganizerDashboard';
+import OrganizerProfile from './pages/OrganizerProfile';
+import EventAnalytics from './pages/EventAnalytics';
 
 function App() {
   return (
@@ -22,10 +27,15 @@ function App() {
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/events/:id" element={<EventDetails />} />
+          <Route path="/profile" element={<StudentProfile />} />
+          <Route path="/organizer/dashboard" element={<OrganizerDashboard />} />
+          <Route path="/organizer/profile" element={<OrganizerProfile />} />
+          <Route path="/analytics" element={<EventAnalytics />} />
         </Routes>
       </div>
     </Router>
   );
 }
 
-export default App
+export default App;

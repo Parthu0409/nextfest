@@ -6,6 +6,8 @@ import dotenv from 'dotenv';
 import usersRouter from './routes/users.js';
 import eventsRouter from './routes/events.js';
 import notificationsRouter from './routes/notifications.js';
+import registrationsRouter from './routes/registrations.js';
+import profileRouter from './routes/profile.js';
 
 dotenv.config();
 
@@ -27,7 +29,11 @@ app.get('/', (req, res) => {
 app.use('/api/users', usersRouter);
 app.use('/api/events', eventsRouter);
 app.use('/api/notifications', notificationsRouter);
+app.use('/api/registrations', registrationsRouter);
+app.use('/api/profile', profileRouter);
 
 app.listen(port, () => {
   console.log(`Backend server running on port ${port}`);
 });
+
+export default app;
