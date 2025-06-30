@@ -1,0 +1,1 @@
+// This file is deprecated. All database calls are now handled by the backend API at http://localhost:4000/api/.
