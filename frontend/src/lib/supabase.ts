@@ -1,1 +1,1 @@
-// This file is deprecated. All database calls are now handled by the backend API at http://localhost:4000/api/.
+// This file is no longer used. All authentication and database calls are handled by the backend API (Node.js + MongoDB).
