@@ -18,6 +18,9 @@ export function EventDiscovery() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [category, setCategory] = useState('all');
+  const [dateFilter, setDateFilter] = useState('');
+  const [organizerFilter, setOrganizerFilter] = useState('');
+  const [locationFilter, setLocationFilter] = useState('');
 
   useEffect(() => {
     fetchEvents();
@@ -39,7 +42,10 @@ export function EventDiscovery() {
     const matchesSearch = event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       event.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = category === 'all' || (event.category ?? 'all') === category;
-    return matchesSearch && matchesCategory;
+    const matchesDate = !dateFilter || event.start_date.startsWith(dateFilter);
+    const matchesOrganizer = !organizerFilter || (event.organizer_id && event.organizer_id.toLowerCase().includes(organizerFilter.toLowerCase()));
+    const matchesLocation = !locationFilter || (event.location && event.location.toLowerCase().includes(locationFilter.toLowerCase()));
+    return matchesSearch && matchesCategory && matchesDate && matchesOrganizer && matchesLocation;
   });
 
   return (
@@ -71,6 +77,38 @@ export function EventDiscovery() {
               <option value="meetup">Meetups</option>
             </select>
           </div>
+          <div className="flex items-center gap-2">
+            <label htmlFor="date" className="text-gray-700">Date:</label>
+            <input
+              id="date"
+              type="date"
+              className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <label htmlFor="organizer" className="text-gray-700">Organizer:</label>
+            <input
+              id="organizer"
+              type="text"
+              placeholder="Organizer name..."
+              className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              value={organizerFilter}
+              onChange={(e) => setOrganizerFilter(e.target.value)}
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <label htmlFor="location" className="text-gray-700">Location:</label>
+            <input
+              id="location"
+              type="text"
+              placeholder="Location..."
+              className="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              value={locationFilter}
+              onChange={(e) => setLocationFilter(e.target.value)}
+            />
+          </div>
         </div>
       </div>
 
@@ -96,7 +134,10 @@ export function EventDiscovery() {
                   <Calendar className="h-5 w-5 mr-2" />
                   <span>{new Date(event.start_date).toLocaleDateString()}</span>
                 </div>
-                <button className="w-full bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors">
+                <button
+                  className="w-full bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors mt-2"
+                  onClick={() => window.location.href = `/events/${event.id}`}
+                >
                   View Details
                 </button>
               </div>
