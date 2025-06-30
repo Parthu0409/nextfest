@@ -9,7 +9,6 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import usersRouter from './routes/users.js';
 import eventsRouter from './routes/events.js';
 import notificationsRouter from './routes/notifications.js';
-import registrationsRouter from './routes/registrations.js';
 import profileRouter from './routes/profile.js';
 import User from './models/User.js';
 
@@ -33,6 +32,58 @@ app.get('/', (req, res) => {
 app.use('/api/users', usersRouter);
 app.use('/api/events', eventsRouter);
 app.use('/api/notifications', notificationsRouter);
+app.use('/api/profile', profileRouter);
+// app.use('/api/registrations', registrationsRouter); // Commented out because registrationsRouter may not exist
+
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'your-session-secret',
+  resave: false,
+  saveUninitialized: false,
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: '/auth/google/callback',
+}, async (accessToken, refreshToken, profile, done) => {
+  try {
+    let user = await User.findOne({ googleId: profile.id });
+    if (!user) {
+      user = await User.create({
+        googleId: profile.id,
+        full_name: profile.displayName,
+        email: profile.emails[0].value,
+        user_type: 'student',
+      });
+    }
+    return done(null, user);
+  } catch (err) {
+    return done(err, null);
+  }
+}));
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err, null);
+  }
+});
+
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login', session: true }),
+  (req, res) => {
+    res.redirect('http://localhost:5173/events');
+  }
+);
 
 app.listen(port, () => {
   console.log(`Backend server running on port ${port}`);
