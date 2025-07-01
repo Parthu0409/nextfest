@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply dark:bg-gradient-to-br dark:from-dark-gradient-from dark:to-dark-gradient-to dark:text-gray-100;
+}
