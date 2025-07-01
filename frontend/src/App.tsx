@@ -13,6 +13,7 @@ import StudentProfile from './pages/StudentProfile';
 import OrganizerDashboard from './pages/OrganizerDashboard';
 import OrganizerProfile from './pages/OrganizerProfile';
 import EventAnalytics from './pages/EventAnalytics';
+import { Footer } from './components/Footer';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             <Route path="/analytics" element={<EventAnalytics />} />
           </Routes>
         </div>
+        <Footer />
       </div>
     </Router>
   );

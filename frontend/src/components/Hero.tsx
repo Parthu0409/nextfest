@@ -6,7 +6,7 @@ export function Hero() {
   return (
     <div className="relative overflow-hidden min-h-screen">
       <div className="absolute inset-0 bg-gradient-to-tr from-[#101014] via-[#23243a] to-[#1e293b] opacity-100"></div>
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mt-10 mb-8">
             Welcome to NextFest
@@ -20,9 +20,7 @@ export function Hero() {
             <div className="bg-dark-card rounded-lg p-8 shadow-lg">
               <h2 className="text-2xl font-bold text-blue-400 mb-4">For Students</h2>
               <p className="text-gray-300 mb-6">
-                Join thousands of students who are enhancing their coding skills,
-                preparing for their future careers, and connecting with like-minded
-                learners.
+                Join thousands of students who are actively enhancing their coding skills, confidently preparing for their future careers, connecting with like-minded learners.
               </p>
               <Link
                 to="/signup?role=student"
