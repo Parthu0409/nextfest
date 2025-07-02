@@ -61,22 +61,16 @@ export function Notifications() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 min-h-screen ">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 min-h-screen bg-gradient-to-tr from-[#101014] via-[#23243a] to-[#1e293b]">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-white mb-4 mt-20">Notifications</h1>
         <p className="text-gray-300">Stay updated with your latest activities</p>
       </div>
 
-      <div className="rounded-lg shadow-lg border border-blue-900/40">
+      <div className="bg-[#18181b] bg-gradient-to-br from-[#23243a] to-[#18181b] rounded-lg shadow-lg border border-blue-900/40">
         {loading ? (
           <div className="text-center py-8">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500 mx-auto"></div>
-          </div>
-        ) : notifications.length === 0 ? (
-          <div className="text-center py-8">
-            <Bell className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-300">No notifications yet</h3>
-            <p className="text-gray-300">We'll notify you when something important happens</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
           </div>
         ) : (
           <div className="divide-y divide-blue-900/40">

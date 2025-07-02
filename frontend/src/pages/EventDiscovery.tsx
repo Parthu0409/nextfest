@@ -24,21 +24,27 @@ export function EventDiscovery() {
   const [locationFilter, setLocationFilter] = useState('');
 
   useEffect(() => {
-    // Function to load events from localStorage and merge with sampleEvents (no duplicates)
-    const loadEvents = () => {
-      const storedEvents = localStorage.getItem('events');
-      let userEvents: Event[] = [];
-      if (storedEvents) {
-        try {
-          userEvents = JSON.parse(storedEvents);
-        } catch {
-          userEvents = [];
-        }
-      }
-      // Merge sampleEvents and userEvents, avoiding duplicates by id
-      const allEventsMap = new Map();
-      sampleEvents.forEach(e => {
-        allEventsMap.set(e.id, {
+    fetchEvents();
+  }, []);
+
+  async function fetchEvents() {
+    try {
+      const response = await fetch('http://localhost:4000/api/events');
+      const data = await response.json();
+      // Merge sampleEvents and db events, avoiding duplicates by title+date
+      const normalizedDbEvents = (data || []).map((e: any) => ({
+        id: e._id?.$oid || e._id || e.id,
+        title: e.title,
+        description: e.description,
+        start_date: e.start_date,
+        end_date: e.end_date,
+        location: e.location,
+        image_url: e.image_url,
+        organizer_id: e.organizer_id?.$oid || e.organizer_id || '',
+        category: e.category,
+      }));
+      const allEvents = [
+        ...sampleEvents.map(e => ({
           id: e.id,
           title: e.title,
           description: e.description,
@@ -46,32 +52,21 @@ export function EventDiscovery() {
           end_date: e.date,
           location: e.location,
           image_url: '',
-          organizer_id: e.organizer.name,
+          organizer_id: e.organizer?.id || '',
           category: e.category,
-          startTime: e.startTime,
-          endTime: e.endTime,
-          organizer: e.organizer,
-          status: e.status,
-          views: e.views,
-          feedback: e.feedback,
-          calendarLink: e.calendarLink,
-        });
-      });
-      userEvents.forEach(e => {
-        allEventsMap.set(e.id, e);
-      });
-      setEvents(Array.from(allEventsMap.values()));
+        })),
+        ...normalizedDbEvents.filter((dbE: any) =>
+          !sampleEvents.some(se => se.title === dbE.title && se.date === dbE.start_date)
+        ),
+      ];
+      setEvents(allEvents);
+    } catch (error) {
+      console.error('Error fetching events:', error);
+      setEvents([]);
+    } finally {
       setLoading(false);
-    };
-
-    loadEvents();
-
-    // Reload events when the page regains focus
-    window.addEventListener('focus', loadEvents);
-    return () => {
-      window.removeEventListener('focus', loadEvents);
-    };
-  }, []);
+    }
+  }
 
   const filteredEvents = events.filter(event => {
     const matchesSearch = event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -83,11 +78,8 @@ export function EventDiscovery() {
     return matchesSearch && matchesCategory && matchesDate && matchesOrganizer && matchesLocation;
   });
 
-  // Simulate user type (replace with real auth logic)
-  const userType = localStorage.getItem('userType') || 'student';
-
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-white mb-4 mt-20">Discover Events</h1>
         <div className="flex flex-col sm:flex-row gap-4">
@@ -182,16 +174,6 @@ export function EventDiscovery() {
             </div>
           ))}
         </div>
-      )}
-
-      {userType === 'organizer' && (
-        <button
-          className="fixed bottom-10 right-10 z-50 bg-blue-500 hover:bg-blue-600 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg text-4xl transition-all duration-200"
-          title="Create Event"
-          onClick={() => window.location.href = '/eventcreate'}
-        >
-          +
-        </button>
       )}
     </div>
   );
