@@ -58,7 +58,7 @@ export default function EventDetails() {
 
   return (
     <div className="max-w-3xl mx-auto py-12 px-4">
-      <div className="bg-[#23243a] rounded-2xl shadow-xl p-8 flex flex-col md:flex-row gap-8 items-center border border-blue-900">
+      <div className="bg-[#23243a] rounded-2xl shadow-xl p-8 flex flex-col md:flex-row gap-8 items-center border border-blue-900 mt-20">
         <div className="flex-1 w-full">
           <h1 className="text-4xl font-bold text-blue-400 mb-2">{event.title}</h1>
           <div className="flex items-center gap-4 mb-4 text-blue-300">
