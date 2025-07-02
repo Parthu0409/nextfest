@@ -1,0 +1,155 @@
+// Sample events data for NextFest
+// This can be imported in your frontend for mock/demo/testing
+
+export const sampleEvents = [
+  {
+    id: '1',
+    title: 'AI & Machine Learning Bootcamp',
+    description: 'A hands-on bootcamp covering the basics of AI and ML.',
+    category: 'Technology',
+    date: '2025-07-10',
+    startTime: '10:00',
+    endTime: '16:00',
+    location: 'Auditorium A',
+    organizer: {
+      id: 'org1',
+      name: 'Tech Society',
+      email: 'techsoc@nextfest.com',
+    },
+    status: 'upcoming',
+    registeredStudents: ['student1', 'student2'],
+    attendees: ['student1'],
+    views: 120,
+    feedback: [
+      { studentId: 'student1', rating: 5, comment: 'Great event!' }
+    ],
+    calendarLink: 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=AI+%26+Machine+Learning+Bootcamp&dates=20250710T100000/20250710T160000&details=A+hands-on+bootcamp+covering+the+basics+of+AI+and+ML.&location=Auditorium+A',
+  },
+  {
+    id: '2',
+    title: 'Startup Pitch Night',
+    description: 'Pitch your startup idea to a panel of investors and mentors.',
+    category: 'Entrepreneurship',
+    date: '2025-07-15',
+    startTime: '18:00',
+    endTime: '21:00',
+    location: 'Main Hall',
+    organizer: {
+      id: 'org2',
+      name: 'Entrepreneur Club',
+      email: 'eclub@nextfest.com',
+    },
+    status: 'upcoming',
+    registeredStudents: [],
+    attendees: [],
+    views: 80,
+    feedback: [],
+    calendarLink: 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Startup+Pitch+Night&dates=20250715T180000/20250715T210000&details=Pitch+your+startup+idea+to+a+panel+of+investors+and+mentors.&location=Main+Hall',
+  },
+  {
+    id: '3',
+    title: 'Cultural Fest 2025',
+    description: 'A celebration of music, dance, and art from around the world.',
+    category: 'Culture',
+    date: '2025-06-20',
+    startTime: '14:00',
+    endTime: '22:00',
+    location: 'Open Grounds',
+    organizer: {
+      id: 'org3',
+      name: 'Cultural Committee',
+      email: 'culture@nextfest.com',
+    },
+    status: 'past',
+    registeredStudents: ['student3'],
+    attendees: ['student3'],
+    views: 200,
+    feedback: [
+      { studentId: 'student3', rating: 4, comment: 'Amazing performances!' }
+    ],
+    calendarLink: 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Cultural+Fest+2025&dates=20250620T140000/20250620T220000&details=A+celebration+of+music,+dance,+and+art+from+around+the+world.&location=Open+Grounds',
+  },
+  {
+    id: '4',
+    title: 'Design Thinking Workshop',
+    description: 'Learn creative problem-solving with hands-on activities and real-world case studies.',
+    category: 'Workshop',
+    date: '2025-08-05',
+    startTime: '09:00',
+    endTime: '13:00',
+    location: 'Innovation Lab',
+    organizer: {
+      id: 'org4',
+      name: 'Design Club',
+      email: 'design@nextfest.com',
+    },
+    status: 'upcoming',
+    registeredStudents: [],
+    attendees: [],
+    views: 45,
+    feedback: [],
+    calendarLink: 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Design+Thinking+Workshop&dates=20250805T090000/20250805T130000&details=Learn+creative+problem-solving+with+hands-on+activities+and+real-world+case+studies.&location=Innovation+Lab',
+  },
+  {
+    id: '5',
+    title: 'Robotics Hackathon',
+    description: 'Build and program robots in teams. Prizes for the most innovative solutions!',
+    category: 'Hackathon',
+    date: '2025-09-12',
+    startTime: '08:00',
+    endTime: '20:00',
+    location: 'Tech Arena',
+    organizer: {
+      id: 'org5',
+      name: 'Robotics Society',
+      email: 'robotics@nextfest.com',
+    },
+    status: 'upcoming',
+    registeredStudents: [],
+    attendees: [],
+    views: 60,
+    feedback: [],
+    calendarLink: 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Robotics+Hackathon&dates=20250912T080000/20250912T200000&details=Build+and+program+robots+in+teams.+Prizes+for+the+most+innovative+solutions!&location=Tech+Arena',
+  },
+  {
+    id: '6',
+    title: 'Women in STEM Conference',
+    description: 'Inspiring talks and networking for women in science, technology, engineering, and math.',
+    category: 'Conference',
+    date: '2025-10-03',
+    startTime: '10:00',
+    endTime: '17:00',
+    location: 'Conference Center',
+    organizer: {
+      id: 'org6',
+      name: 'STEM Council',
+      email: 'stem@nextfest.com',
+    },
+    status: 'upcoming',
+    registeredStudents: [],
+    attendees: [],
+    views: 90,
+    feedback: [],
+    calendarLink: 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Women+in+STEM+Conference&dates=20251003T100000/20251003T170000&details=Inspiring+talks+and+networking+for+women+in+science,+technology,+engineering,+and+math.&location=Conference+Center',
+  }
+];
+
+// Example student profile data
+export const sampleStudentProfile = {
+  id: 'student1',
+  name: 'Alice Johnson',
+  email: 'alice@student.com',
+  registeredEvents: ['1'],
+  attendedEvents: ['1'],
+  achievements: ['Early Bird', 'AI Enthusiast'],
+  badges: ['Active Participant'],
+};
+
+// Example organizer profile data
+export const sampleOrganizerProfile = {
+  id: 'org1',
+  name: 'Tech Society',
+  email: 'techsoc@nextfest.com',
+  events: ['1'],
+  portfolio: ['AI & Machine Learning Bootcamp'],
+};

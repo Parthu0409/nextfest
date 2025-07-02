@@ -14,6 +14,7 @@ import OrganizerDashboard from './pages/OrganizerDashboard';
 import OrganizerProfile from './pages/OrganizerProfile';
 import EventAnalytics from './pages/EventAnalytics';
 import { Footer } from './components/Footer';
+import { EventCreate } from './pages/EventCreate';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path="/organizer/dashboard" element={<OrganizerDashboard />} />
             <Route path="/organizer/profile" element={<OrganizerProfile />} />
             <Route path="/analytics" element={<EventAnalytics />} />
+            <Route path="/eventcreate" element={<EventCreate />} />
           </Routes>
         </div>
         <Footer />

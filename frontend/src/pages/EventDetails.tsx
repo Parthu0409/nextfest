@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { sampleEvents } from '../lib/sampleEvents';
+import { Calendar, MapPin, User, Clock, Award } from 'lucide-react';
 
 interface Event {
   id: string;
@@ -15,19 +17,16 @@ interface Event {
 
 export default function EventDetails() {
   const { id } = useParams();
-  const [event, setEvent] = useState<Event | null>(null);
+  const [event, setEvent] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
   const [registered, setRegistered] = useState(false);
 
   useEffect(() => {
-    async function fetchEvent() {
-      setLoading(true);
-      const res = await fetch(`http://localhost:4000/api/events/${id}`);
-      const data = await res.json();
-      setEvent(data);
-      setLoading(false);
-    }
-    fetchEvent();
+    // Use sampleEvents for demo
+    const found = sampleEvents.find(e => e.id === id);
+    // If not found, try to find by string id (for newly created events)
+    setEvent(found || null);
+    setLoading(false);
   }, [id]);
 
   const handleRegister = async () => {
@@ -58,21 +57,48 @@ export default function EventDetails() {
   if (!event) return <div className="text-center py-8">Event not found.</div>;
 
   return (
-    <div className="max-w-3xl mx-auto py-8 px-4">
-      <h1 className="text-3xl font-bold mb-4">{event.title}</h1>
-      <img src={event.image_url} alt={event.title} className="w-full h-64 object-cover rounded mb-4" />
-      <p className="mb-2 text-gray-700">{event.description}</p>
-      <div className="mb-2">Location: <span className="font-semibold">{event.location}</span></div>
-      <div className="mb-2">Start: {new Date(event.start_date).toLocaleString()}</div>
-      <div className="mb-2">End: {new Date(event.end_date).toLocaleString()}</div>
-      <div className="mb-2">Organizer: <span className="font-semibold">{event.organizer_id}</span></div>
-      <div className="flex gap-4 mt-4">
-        {!registered ? (
-          <button onClick={handleRegister} className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Register</button>
-        ) : (
-          <button onClick={handleCancel} className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Cancel Registration</button>
-        )}
-        <button onClick={addToCalendar} className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Add to Google Calendar</button>
+    <div className="max-w-3xl mx-auto py-12 px-4">
+      <div className="bg-[#23243a] rounded-2xl shadow-xl p-8 flex flex-col md:flex-row gap-8 items-center border border-blue-900">
+        <div className="flex-1 w-full">
+          <h1 className="text-4xl font-bold text-blue-400 mb-2">{event.title}</h1>
+          <div className="flex items-center gap-4 mb-4 text-blue-300">
+            <User className="h-5 w-5" />
+            <span className="font-medium">Organizer:</span>
+            <span>{event.organizer?.name || event.organizer_id}</span>
+          </div>
+          <div className="flex items-center gap-4 mb-4 text-blue-300">
+            <Calendar className="h-5 w-5" />
+            <span>{event.date || event.start_date}</span>
+            <Clock className="h-5 w-5 ml-4" />
+            <span>{event.startTime} - {event.endTime}</span>
+          </div>
+          <div className="flex items-center gap-4 mb-4 text-blue-300">
+            <MapPin className="h-5 w-5" />
+            <span>{event.location}</span>
+          </div>
+          <div className="mb-6 text-white text-lg leading-relaxed">
+            {event.description}
+          </div>
+          <div className="flex gap-4 mb-6">
+            {!registered ? (
+              <button onClick={() => setRegistered(true)} className="bg-blue-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-600 transition">Register</button>
+            ) : (
+              <button onClick={() => setRegistered(false)} className="bg-red-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-red-600 transition">Cancel Registration</button>
+            )}
+            <a
+              href={event.calendarLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-green-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-700 transition"
+            >
+              Add to Google Calendar
+            </a>
+          </div>
+          <div className="flex items-center gap-2 mt-2">
+            <Award className="h-5 w-5 text-yellow-400" />
+            <span className="text-yellow-300 text-sm">{event.views} views</span>
+          </div>
+        </div>
       </div>
     </div>
   );
